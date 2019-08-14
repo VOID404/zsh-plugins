@@ -3,6 +3,9 @@ function kyma-init {
 	&& kubectl get configmap net-global-overrides -n kyma-installer -o jsonpath='{.data.global\.ingress\.tlsCrt}' | base64 --decode > $tmpfile \
 	&& sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain $tmpfile \
 	&& rm $tmpfile
-    kubectl get virtualservice core-console -n kyma-system -o jsonpath='{ .spec.hosts[0] }' | echo "url: "
-    kubectl get secret admin-user -n kyma-system -o jsonpath="{.data.password}" | base64 --decode | echo "pass: "
+    echo "url: "
+    kubectl get virtualservice core-console -n kyma-system -o jsonpath='{ .spec.hosts[0] }'
+    echo "pass: "
+    kubectl get secret admin-user -n kyma-system -o jsonpath="{.data.password}" | base64 --decode
+    echo ""
 }
